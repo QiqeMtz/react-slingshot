@@ -1,0 +1,31 @@
+version: 2.1
+
+workflows:
+  build-test-analyze:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - analyze:
+          requires:
+            - test
+jobs:
+  build:
+    docker:
+      - image: cimg/node:14.10.1
+    steps:
+      - checkout
+      - run: npm run lint
+  test:
+    docker:
+      - image: cimg/node:14.10.1
+    steps:
+      - checkout
+      - run: npm run test
+  analyze:
+    docker:
+      - image: cimg/node:14.10.1
+    steps:
+      - checkout
+      - run: npm audit
