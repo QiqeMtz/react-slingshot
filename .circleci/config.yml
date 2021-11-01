@@ -31,3 +31,7 @@ jobs:
     steps:
       - checkout
       - run: npm audit
+      - run: 
+          name: Failed the audit of npm
+          command: echo "the audit failed"
+          when: on_fail
